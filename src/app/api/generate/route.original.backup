@@ -1,0 +1,368 @@
+import { NextRequest, NextResponse } from 'next/server';
+
+// 定义请求体类型
+interface GenerateRequest {
+  topic: string;
+  writingStyle?: string;
+  emotionLevel?: number;
+  creativityLevel?: number;
+  length?: number;
+  includeCharacters?: boolean;
+  includePlot?: boolean;
+  includeWorldview?: boolean;
+}
+
+// 定义响应类型
+interface GenerateResponse {
+  success: boolean;
+  data?: {
+    content: string;
+    tokensUsed: number;
+    estimatedCost: number;
+    generationId: string;
+    modelUsed: string;
+  };
+  error?: string;
+  message?: string;
+}
+
+// 模拟的AI模型响应（实际开发时需要替换为真实的API调用）
+const mockAIResponse = async (prompt: string): Promise<string> => {
+  // 这里模拟不同的主题生成不同的内容
+  const responses: Record<string, string> = {
+    '武侠': `# 武侠故事：《剑影江湖》
+
+## 人物设定
+**林风** - 28岁，蜀山剑派弃徒
+- **背景**：因救魔教女子被逐出师门
+- **能力**：掌握失传的"无影剑法"
+- **性格**：外表冷漠，内心重情重义
+
+**霓裳** - 25岁，魔教圣女
+- **背景**：为救父亲被迫加入魔教
+- **能力**：精通毒术和暗器
+- **性格**：表面妖娆，实则善良单纯
+
+## 开篇场景
+月黑风高夜，林风独坐客栈二楼。
+窗外传来细微的破空声，三枚银针穿透窗纸。
+"蜀山弃徒，交出剑谱，饶你不死。"
+林风缓缓睁眼，剑未出鞘，剑气已至。
+"魔教的人？"他声音平静，"告诉你们圣女，有些东西，不是她能碰的。"
+
+## 核心冲突
+1. **正邪对立**：林风的正道背景 vs 霓裳的魔教身份
+2. **情感纠葛**：两人在追杀中渐生情愫
+3. **身世之谜**：林风发现自己的真实身世与魔教有关
+
+## 特色场景
+**剑冢对决**：两人在历代剑客埋骨之地决战，却发现彼此剑法同源
+**毒雾森林**：霓裳为救林风中了自己教中的剧毒
+**最终选择**：林风必须在师门和爱情之间做出选择
+
+---
+*"剑可以斩断一切，却斩不断情丝。" - 林风*`,
+
+    '科幻': `# 科幻故事：《数据觉醒》
+
+## 世界观设定
+**时代**：22世纪，人类意识可数字化上传
+**社会**：现实世界与虚拟世界"元宇宙"并存
+**冲突**：数字人类 vs 肉体人类的权利之争
+
+## 主要人物
+**Zero** - 前黑客，现为数字游民
+- **特点**：意识99%数字化，仅保留1%肉体连接
+- **目标**：找到传说中的"源代码"，解放所有数字人类
+- **弱点**：对现实世界的记忆逐渐模糊
+
+**Echo** - 元宇宙管理局特工
+- **特点**：半机械人，负责追捕非法数字意识
+- **目标**：维护两个世界的平衡
+- **秘密**：她其实是Zero失散多年的妹妹
+
+## 开篇场景
+Zero在数据流中穿梭，躲避着Echo的追捕。
+"目标锁定，准备意识剥离。" Echo的声音在通讯频道响起。
+但就在捕获瞬间，Zero看到了Echo颈后的芯片编号——和他记忆中的一模一样。
+"等等...你是小雨？" Zero的数据流出现剧烈波动。
+Echo的动作停滞了0.3秒，这是她成为特工以来第一次犹豫。
+
+## 科技设定
+1. **意识上传**：通过"灵魂接口"将人类意识数字化
+2. **数据生命**：数字意识可以永生，但会逐渐失去人性
+3. **现实锚点**：保留少量肉体连接，防止意识迷失
+4. **防火墙**：分隔现实与虚拟世界的安全屏障
+
+## 哲学探讨
+- 数字化的意识还是"人"吗？
+- 永生是否意味着失去生命的意义？
+- 现实与虚拟，哪个更"真实"？
+
+---
+*"我的代码里有你的名字，这是我最后的人性证明。" - Zero*`,
+
+    '爱情': `# 爱情故事：《时光信使》
+
+## 核心设定
+**特殊能力**：女主角可以给过去的自己写信
+**限制**：每封信只能改变一个小细节
+**代价**：每次改变，现在的记忆会模糊一点
+
+## 人物介绍
+**林初夏** - 28岁，图书管理员
+- **能力**：18岁生日时获得给过去写信的能力
+- **现状**：用了10年时间试图"修正"人生
+- **问题**：记忆严重碎片化，快要忘记自己是谁
+
+**顾星辰** - 30岁，历史学家
+- **特点**：记忆力超群，过目不忘
+- **目标**：研究时间悖论
+- **秘密**：他能看到林初夏信件的"涟漪效应"
+
+## 相遇场景
+图书馆，雨天。
+林初夏在整理旧书信时，发现一封自己不可能写过的信：
+"给28岁的我：不要试图改变过去，有些错过是为了更好的相遇。"
+落款是她自己的笔迹，日期却是今天。
+她抬头，看见顾星辰站在书架旁，手中拿着同样的信纸。
+"我也收到了，"他说，"不过是写给30岁的我。"
+
+## 时间线变化
+**版本A**（原始时间线）：
+两人在大学相遇，相爱，但因误会分手，十年未见。
+
+**版本B**（林初夏修改后）：
+她阻止了当年的误会，两人顺利结婚，但顾星辰在蜜月旅行中意外去世。
+
+**版本C**（顾星辰介入后）：
+他找到了平衡点——保留相遇，修改细节，让爱情以另一种方式绽放。
+
+## 情感主题
+- 完美 vs 真实：修改过的人生是否更幸福？
+- 记忆 vs 存在：如果忘记了过去，爱是否还存在？
+- 命运 vs 选择：有些相遇是命中注定，还是人为创造？
+
+---
+*"我修改了所有错误，却忘了最错的事是试图让一切完美。" - 林初夏*`
+  };
+
+  // 根据主题选择响应，如果没有匹配则使用默认
+  const lowerTopic = prompt.toLowerCase();
+  
+  if (lowerTopic.includes('武侠') || lowerTopic.includes('江湖')) {
+    return responses['武侠'];
+  } else if (lowerTopic.includes('科幻') || lowerTopic.includes('未来')) {
+    return responses['科幻'];
+  } else if (lowerTopic.includes('爱情') || lowerTopic.includes('情感')) {
+    return responses['爱情'];
+  } else {
+    // 默认响应 - 根据参数生成
+    return `# 创作灵感：《${prompt}》
+
+## 基于你的参数生成：
+- **文风**：${prompt.includes('热血') ? '热血冒险风格' : '文艺深沉风格'}
+- **情绪强度**：${prompt.includes('悲伤') ? '悲伤氛围浓厚' : '积极向上'}
+- **创意等级**：${prompt.includes('创新') ? '高度创新，突破常规' : '稳中求新'}
+
+## 故事核心
+这是一个关于${prompt}的故事。主角在追寻目标的过程中，发现了比目标更重要的东西。
+
+## 推荐展开方向
+1. **人物弧光**：让主角从追求外在目标转向内心成长
+2. **情节设计**：设置三次重大转折，每次转折都让主角更接近真相
+3. **主题升华**：探讨${prompt}背后的深层意义
+
+## 写作建议
+- 开篇用具体场景引入，避免直接说明
+- 中间部分保持节奏，每隔千字设置一个小高潮
+- 结尾留有余味，让读者有所思考
+
+---
+*"最好的故事，往往诞生于最真诚的表达。" - 灵光智能体*`;
+  }
+};
+
+// 真实的AI API调用函数（需要配置API密钥）
+const callRealAI = async (prompt: string, config: Partial<GenerateRequest>): Promise<string> => {
+  // 这里需要替换为真实的API调用
+  // 示例：OpenAI API调用
+  
+  /*
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content: '你是一个专业的写作助手，擅长生成创意写作灵感。请根据用户要求生成详细的故事大纲、人物设定和写作建议。'
+        },
+        {
+          role: 'user',
+          content: `请根据以下参数生成写作灵感：
+主题：${config.topic}
+文风：${config.writingStyle || '默认'}
+情绪强度：${config.emotionLevel || 50}/100
+创意等级：${config.creativityLevel || 50}/100
+字数要求：${config.length || 1000}字
+包含内容：${config.includeCharacters ? '人物设定 ' : ''}${config.includePlot ? '情节大纲 ' : ''}${config.includeWorldview ? '世界观 ' : ''}
+请生成详细、有创意的写作灵感。`
+        }
+      ],
+      temperature: (config.creativityLevel || 50) / 100,
+      max_tokens: Math.min((config.length || 1000) * 2, 4000),
+    }),
+  });
+
+  const data = await response.json();
+  return data.choices[0].message.content;
+  */
+  
+  // 暂时返回模拟数据
+  return mockAIResponse(prompt);
+};
+
+// 生成唯一的ID
+const generateId = (): string => {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
+
+export async function POST(request: NextRequest) {
+  try {
+    // 解析请求体
+    const body: GenerateRequest = await request.json();
+    
+    // 验证必要参数
+    if (!body.topic || body.topic.trim().length === 0) {
+      return NextResponse.json<GenerateResponse>({
+        success: false,
+        error: 'VALIDATION_ERROR',
+        message: '主题不能为空'
+      }, { status: 400 });
+    }
+
+    if (body.topic.length > 500) {
+      return NextResponse.json<GenerateResponse>({
+        success: false,
+        error: 'VALIDATION_ERROR',
+        message: '主题长度不能超过500字符'
+      }, { status: 400 });
+    }
+
+    // 验证可选参数范围
+    if (body.emotionLevel && (body.emotionLevel < 0 || body.emotionLevel > 100)) {
+      return NextResponse.json<GenerateResponse>({
+        success: false,
+        error: 'VALIDATION_ERROR',
+        message: '情绪强度必须在0-100之间'
+      }, { status: 400 });
+    }
+
+    if (body.creativityLevel && (body.creativityLevel < 0 || body.creativityLevel > 100)) {
+      return NextResponse.json<GenerateResponse>({
+        success: false,
+        error: 'VALIDATION_ERROR',
+        message: '创意等级必须在0-100之间'
+      }, { status: 400 });
+    }
+
+    // 记录请求（在实际应用中，这里可以记录到数据库）
+    console.log('生成请求:', {
+      topic: body.topic,
+      timestamp: new Date().toISOString(),
+      ip: request.headers.get('x-forwarded-for') || 'unknown'
+    });
+
+    // 调用AI生成内容
+    const startTime = Date.now();
+    const aiResponse = await callRealAI(body.topic, body);
+    const endTime = Date.now();
+    
+    // 计算token使用量（简单估算）
+    const tokensUsed = Math.ceil(aiResponse.length / 4);
+    
+    // 计算预估成本（基于GPT-3.5-turbo价格）
+    const estimatedCost = tokensUsed * 0.000002; // $0.002 per 1K tokens
+    
+    // 生成响应ID
+    const generationId = generateId();
+
+    // 构建成功响应
+    const response: GenerateResponse = {
+      success: true,
+      data: {
+        content: aiResponse,
+        tokensUsed,
+        estimatedCost,
+        generationId,
+        modelUsed: process.env.AI_MODEL || 'mock-model'
+      }
+    };
+
+    // 添加延迟模拟真实API调用
+    const processingTime = endTime - startTime;
+    const minDelay = 1000; // 最小延迟1秒
+    const delay = Math.max(minDelay - processingTime, 0);
+    
+    if (delay > 0) {
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+
+    return NextResponse.json(response, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Generation-ID': generationId,
+        'X-Processing-Time': `${processingTime}ms`
+      }
+    });
+
+  } catch (error) {
+    console.error('API错误:', error);
+    
+    // 根据错误类型返回不同的响应
+    if (error instanceof SyntaxError) {
+      return NextResponse.json<GenerateResponse>({
+        success: false,
+        error: 'INVALID_JSON',
+        message: '请求体必须是有效的JSON'
+      }, { status: 400 });
+    }
+
+    return NextResponse.json<GenerateResponse>({
+      success: false,
+      error: 'INTERNAL_ERROR',
+      message: '服务器内部错误，请稍后重试'
+    }, { status: 500 });
+  }
+}
+
+// 可选：添加GET方法用于健康检查
+export async function GET() {
+  return NextResponse.json({
+    status: 'healthy',
+    service: 'lingguang-ai-generator',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      POST: '/api/generate - 生成写作灵感'
+    }
+  });
+}
+
+// 可选：添加OPTIONS方法用于CORS预检
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
+}

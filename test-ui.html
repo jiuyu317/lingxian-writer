@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意组合模式测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f9fafb;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #7c3aed;
+            margin-bottom: 10px;
+        }
+        .description {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+        .test-case {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .test-title {
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+        }
+        button {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #7c3aed;
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 6px;
+            border-left: 4px solid #3b82f6;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #8b5cf6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .word-count {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 创意组合模式测试</h1>
+        <p class="description">测试创意组合模式的API调用和UI交互</p>
+        
+        <div class="test-case">
+            <div class="test-title">
+                <span>测试1: 时间旅行 + 咖啡馆</span>
+                <span id="status1" class="status"></span>
+            </div>
+            <div class="test-inputs">
+                <input type="text" id="element1-1" value="时间旅行" placeholder="第一个元素">
+                <input type="text" id="element2-1" value="咖啡馆" placeholder="第二个元素">
+            </div>
+            <button onclick="testCombination(1)">测试创意组合</button>
+            <div id="result1" class="result"></div>
+        </div>
+
+        <div class="test-case">
+            <div class="test-title">
+                <span>测试2: 机器人 + 花园</span>
+                <span id="status2" class="status"></span>
+            </div>
+            <div class="test-inputs">
+                <input type="text" id="element1-2" value="机器人" placeholder="第一个元素">
+                <input type="text" id="element2-2" value="花园" placeholder="第二个元素">
+            </div>
+            <button onclick="testCombination(2)">测试创意组合</button>
+            <div id="result2" class="result"></div>
+        </div>
+
+        <div class="test-case">
+            <div class="test-title">
+                <span>测试3: 自定义组合</span>
+                <span id="status3" class="status"></span>
+            </div>
+            <div class="test-inputs">
+                <input type="text" id="element1-3" placeholder="输入第一个元素" value="魔法">
+                <input type="text" id="element2-3" placeholder="输入第二个元素" value="早晨通勤">
+            </div>
+            <button onclick="testCombination(3)">测试创意组合</button>
+            <div id="result3" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        async function testCombination(testId) {
+            const element1 = document.getElementById(`element1-${testId}`).value.trim();
+            const element2 = document.getElementById(`element2-${testId}`).value.trim();
+            const resultDiv = document.getElementById(`result${testId}`);
+            const statusSpan = document.getElementById(`status${testId}`);
+            
+            if (!element1 || !element2) {
+                alert('请填写两个元素');
+                return;
+            }
+            
+            // 显示加载状态
+            const button = event.target;
+            const originalText = button.textContent;
+            button.innerHTML = '<span class="loading"></span>生成中...';
+            button.disabled = true;
+            statusSpan.textContent = '';
+            statusSpan.className = 'status';
+            resultDiv.className = 'result';
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        topic: `${element1} + ${element2}`,
+                        style: 'creative',
+                        emotionIntensity: 80,
+                        creativityLevel: 100,
+                        length: 'short',
+                        additionalInstructions: `请将"${element1}"和"${element2}"这两个看似无关的元素创意地结合起来，生成让人眼前一亮的灵感点子`,
+                        mode: 'inspiration'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusSpan.textContent = '✅ 成功';
+                    statusSpan.className = 'status success';
+                    
+                    const content = data.data.content;
+                    const wordCount = content.trim().split(/\s+/).length;
+                    
+                    resultDiv.innerHTML = `
+                        <strong>🎯 组合主题:</strong> ${element1} + ${element2}<br><br>
+                        <strong>📝 生成内容:</strong><br>
+                        ${content.substring(0, 500)}${content.length > 500 ? '...' : ''}<br><br>
+                        <div class="word-count">
+                            📏 字数: ${wordCount} 字 | 
+                            🔢 Token: ${data.data.tokensUsed} | 
+                            🤖 模型: ${data.data.modelUsed} | 
+                            ⏱️ 耗时: ${data.data.estimatedCost ? (data.data.estimatedCost * 1000).toFixed(3) + '秒' : 'N/A'}
+                        </div>
+                    `;
+                    resultDiv.className = 'result show';
+                } else {
+                    statusSpan.textContent = '❌ 失败';
+                    statusSpan.className = 'status error';
+                    resultDiv.innerHTML = `<strong>错误:</strong> ${data.error || '未知错误'}`;
+                    resultDiv.className = 'result show';
+                }
+            } catch (error) {
+                statusSpan.textContent = '❌ 错误';
+                statusSpan.className = 'status error';
+                resultDiv.innerHTML = `<strong>请求失败:</strong> ${error.message}`;
+                resultDiv.className = 'result show';
+            } finally {
+                // 恢复按钮状态
+                button.textContent = originalText;
+                button.disabled = false;
+            }
+        }
+        
+        // 页面加载时自动测试第一个
+        window.addEventListener('load', () => {
+            setTimeout(() => testCombination(1), 1000);
+        });
+    </script>
+</body>
+</html>

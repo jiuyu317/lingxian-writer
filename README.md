@@ -1,36 +1,137 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 灵现 · AI写作智能体
 
-## Getting Started
+一个专为写作者设计的AI灵感激发师网站，基于Next.js 14 (App Router) 和 Tailwind CSS构建。
 
-First, run the development server:
+## 🚀 功能特性
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 核心功能
+- **智能灵感生成**：根据主题和参数生成创作灵感
+- **参数化配置**：可调节文风、情绪强度、创意等级等
+- **实时预览**：生成结果即时展示
+- **暗色/亮色主题**：支持主题切换
+
+### 技术特色
+- 响应式设计，适配各种设备
+- 流畅的动画和过渡效果
+- 现代化的UI组件
+- TypeScript类型安全
+
+## 📁 项目结构
+
+```
+lingguang-website/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          # 根布局组件
+│   │   ├── page.tsx            # 主页面组件
+│   │   └── globals.css         # 全局样式
+│   └── components/             # 可复用组件（待开发）
+├── public/                     # 静态资源
+├── package.json
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ 技术栈
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **框架**: Next.js 14 (App Router)
+- **语言**: TypeScript
+- **样式**: Tailwind CSS
+- **图标**: Lucide React
+- **包管理**: npm
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚦 快速开始
 
-## Learn More
+### 安装依赖
+```bash
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 开发模式
+```bash
+npm run dev
+```
+访问 [http://localhost:3000](http://localhost:3000)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 构建生产版本
+```bash
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 启动生产服务器
+```bash
+npm start
+```
 
-## Deploy on Vercel
+## 🎨 设计理念
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 用户体验
+- **直观操作**：左侧配置，右侧实时预览
+- **即时反馈**：生成过程有加载状态提示
+- **个性化**：支持多种文风和参数调节
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 视觉设计
+- **渐变背景**：营造创意氛围
+- **卡片式布局**：信息层次清晰
+- **微交互**：按钮悬停、切换动画等
+
+## 🔧 配置说明
+
+### 创作参数
+1. **主题**：输入创作的核心主题
+2. **文风**：选择适合的故事风格（热血、浪漫、悬疑等）
+3. **情绪强度**：调节故事的感染力
+4. **创意等级**：控制灵感的突破性
+5. **文章长度**：选择生成内容的篇幅
+6. **包含内容**：选择是否包含人物、情节、世界观等
+
+### 主题切换
+- 点击右上角月亮/太阳图标切换亮色/暗色主题
+- 系统会自动保存主题偏好
+
+## 📱 响应式设计
+
+- **桌面端**：三栏布局，完整功能展示
+- **平板端**：自适应布局，优化操作体验
+- **移动端**：单列布局，优先核心功能
+
+## 🚀 开发计划
+
+### 已完成
+- [x] 项目基础架构搭建
+- [x] 主页面UI设计
+- [x] 参数配置面板
+- [x] 结果展示区域
+- [x] 主题切换功能
+- [x] 响应式布局
+
+### 待开发
+- [ ] 后端API集成（OpenAI等）
+- [ ] 用户系统（登录/注册）
+- [ ] 灵感收藏功能
+- [ ] 历史记录查看
+- [ ] 导出功能（PDF、Markdown等）
+- [ ] 更多文风模板
+- [ ] 移动端优化
+
+## 🤝 贡献指南
+
+1. Fork项目
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启Pull Request
+
+## 📄 许可证
+
+本项目仅供学习交流使用，请勿用于商业用途。
+
+## 🙏 致谢
+
+- [Next.js](https://nextjs.org/) - React框架
+- [Tailwind CSS](https://tailwindcss.com/) - 实用优先的CSS框架
+- [Lucide Icons](https://lucide.dev/) - 精美的图标库
+- [OpenAI](https://openai.com/) - AI模型支持
+
+---
+
+**灵现智能体** - 给你的大脑放烟花！ ✨
