@@ -433,8 +433,7 @@ export class DraftsService {
         console.log('❌ 用户未登录，无法保存草稿')
         return { 
           success: false, 
-          error: '用户未登录，请重新登录后重试',
-          debug: { authError: authError?.message }
+          error: '用户未登录，请重新登录后重试'
         }
       }
       
@@ -443,12 +442,7 @@ export class DraftsService {
         console.log(`❌ 用户ID不匹配: 当前用户=${user.id}, 草稿用户=${draft.userId}`)
         return { 
           success: false, 
-          error: `权限错误: 无法为其他用户保存草稿`,
-          debug: { 
-            currentUser: user.id, 
-            draftUser: draft.userId,
-            mismatch: true 
-          }
+          error: `权限错误: 无法为其他用户保存草稿`
         }
       }
       
@@ -498,8 +492,7 @@ export class DraftsService {
           console.log('错误详情:', error)
           return { 
             success: false, 
-            error: `更新草稿失败: ${error.message}`,
-            debug: { sqlError: error }
+            error: `更新草稿失败: ${error.message}`
           }
         }
         
@@ -523,20 +516,13 @@ export class DraftsService {
           if (error.message.includes('row-level security')) {
             return { 
               success: false, 
-              error: '权限错误: 无法保存草稿。请确保已登录且用户ID正确。',
-              debug: { 
-                rlsError: true,
-                currentUser: user.id,
-                draftUser: draft.userId,
-                errorDetails: error 
-              }
+              error: '权限错误: 无法保存草稿。请确保已登录且用户ID正确。'
             }
           }
           
           return { 
             success: false, 
-            error: `保存草稿失败: ${error.message}`,
-            debug: { sqlError: error }
+            error: `保存草稿失败: ${error.message}`
           }
         }
         
@@ -561,8 +547,7 @@ export class DraftsService {
         wordCount: result.word_count,
         characterCount: result.character_count,
         lastSavedAt: result.last_saved_at,
-        createdAt: result.created_at,
-        updatedAt: result.updated_at
+        createdAt: result.created_at
       }
       
       console.log(`🎉 草稿保存完成: ${convertedResult.id}`)
@@ -572,8 +557,7 @@ export class DraftsService {
       console.log('💥 saveDraft捕获到异常:', error)
       return {
         success: false,
-        error: error instanceof Error ? error.message : '保存草稿时发生未知错误',
-        debug: { exception: error }
+        error: error instanceof Error ? error.message : '保存草稿时发生未知错误'
       }
     }
   }
@@ -697,8 +681,7 @@ export class DraftsService {
         wordCount: data.word_count,
         characterCount: data.character_count,
         lastSavedAt: data.last_saved_at,
-        createdAt: data.created_at,
-        updatedAt: data.updated_at
+        createdAt: data.created_at
       }
       
       return { success: true, data: draft }

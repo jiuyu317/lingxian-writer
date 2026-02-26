@@ -326,8 +326,8 @@ ${config.includeWorldview ? '必须包含独特的世界观设定，包括时代
           },
         ],
         stream: true,
-        temperature: config.creativityLevel / 100,
-        max_tokens: Math.min(config.length * 2, modelConfig.maxTokens),
+        temperature: (config.creativityLevel || 50) / 100,
+        max_tokens: Math.min((config.length || 500) * 2, modelConfig.maxTokens),
       });
 
       let fullContent = '';
@@ -402,8 +402,8 @@ ${config.includeWorldview ? '必须包含独特的世界观设定，包括时代
           },
         ],
         stream: true,
-        temperature: config.creativityLevel / 100,
-        max_tokens: Math.min(config.length * 2, modelConfig.maxTokens),
+        temperature: (config.creativityLevel || 50) / 100,
+        max_tokens: Math.min((config.length || 500) * 2, modelConfig.maxTokens),
       });
 
       let fullContent = '';
