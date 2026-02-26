@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowLeft, User, Mail, Calendar, Edit, Save, Sparkles } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ProfilePage() {
   const user = await getCurrentUser()
 

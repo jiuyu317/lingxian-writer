@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, ArrowRight, Sparkles, Zap, Crown } from 'lucide-react';
 
-export default function UpgradeSuccessPage() {
+function UpgradeSuccessPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [countdown, setCountdown] = useState(5);
@@ -129,5 +129,13 @@ export default function UpgradeSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function UpgradeSuccessPage() {
+  return (
+    <Suspense fallback={<div>加载中...</div>}>
+      <UpgradeSuccessPageContent />
+    </Suspense>
   );
 }

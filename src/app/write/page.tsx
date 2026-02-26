@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCreditsSimple } from '@/hooks/useCreditsSimple';
 import { createClient } from '@/lib/supabase/client';
@@ -8,7 +8,7 @@ import { generateContentStream } from '@/lib/api';
 import { Sparkles, ArrowLeft, Zap, Check, Copy, Save, Brain, StopCircle, RotateCcw, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 
-export default function WritePage() {
+function WritePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode'); // 'inspiration' 或 null
@@ -868,5 +868,13 @@ export default function WritePage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function WritePage() {
+  return (
+    <Suspense fallback={<div>加载中...</div>}>
+      <WritePageContent />
+    </Suspense>
   );
 }
