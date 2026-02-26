@@ -57,8 +57,8 @@ export default function UpgradePage() {
   const subscriptionPlans: SubscriptionPlan[] = [
     {
       id: 'monthly',
-      name: '月度版',
-      description: '适合短期试用',
+      name: '普通版',
+      description: '基础写作套餐',
       price: 39,
       durationMonths: 1,
       aiCredits: 100,
@@ -67,15 +67,14 @@ export default function UpgradePage() {
       features: [
         '100次AI写作生成',
         '所有写作风格',
-        '30天有效',
         '优先支持'
       ],
       popular: false
     },
     {
       id: 'quarterly',
-      name: '季度版',
-      description: '3个月套餐',
+      name: 'PLUS版',
+      description: '进阶写作套餐',
       price: 69,
       durationMonths: 3,
       aiCredits: 300,
@@ -84,7 +83,6 @@ export default function UpgradePage() {
       features: [
         '300次AI写作生成',
         '所有写作风格',
-        '90天有效',
         '优先支持',
         '节省41%'
       ],
@@ -92,8 +90,8 @@ export default function UpgradePage() {
     },
     {
       id: 'semiannual',
-      name: '半年版',
-      description: '6个月套餐',
+      name: 'PRO版',
+      description: '专业写作套餐',
       price: 99,
       durationMonths: 6,
       aiCredits: 500,
@@ -102,7 +100,6 @@ export default function UpgradePage() {
       features: [
         '500次AI写作生成',
         '所有写作风格',
-        '180天有效',
         '优先支持',
         '节省58%'
       ],
@@ -282,8 +279,6 @@ export default function UpgradePage() {
 套餐：${plan.name}
 价格：¥${plan.price}
 获得额度：${plan.aiCredits.toLocaleString()}次AI写作
-有效期：${plan.durationMonths}个月
-月均：¥${plan.monthlyPrice.toFixed(2)}/月
 
 您可以立即开始使用AI写作功能！`);
 
@@ -368,9 +363,6 @@ export default function UpgradePage() {
                       <span className="text-3xl font-bold text-gray-900">
                         ¥{plan.price}
                       </span>
-                      <span className="text-gray-500 ml-2">
-                        /{plan.durationMonths}个月
-                      </span>
                     </div>
 
                     <div className="text-gray-700 mb-2">
@@ -380,7 +372,7 @@ export default function UpgradePage() {
                     {plan.savingsPercent > 0 && (
                       <div className="text-green-600 text-sm">
                         <Check className="w-4 h-4 inline mr-1" />
-                        月均¥{plan.monthlyPrice}，节省{plan.savingsPercent}%
+                        节省{plan.savingsPercent}%
                       </div>
                     )}
                   </div>
@@ -434,13 +426,13 @@ export default function UpgradePage() {
               <div>
                 <h4 className="font-semibold text-gray-800 mb-1">额度如何计算？</h4>
                 <p className="text-gray-600 text-sm">
-                  每次AI写作生成消耗1次额度。购买套餐后获得相应次数的额度，在套餐有效期内使用。
+                  每次AI写作生成消耗1次额度。购买套餐后获得相应次数的额度，可随时使用。
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 mb-1">套餐到期后怎么办？</h4>
+                <h4 className="font-semibold text-gray-800 mb-1">额度会过期吗？</h4>
                 <p className="text-gray-600 text-sm">
-                  套餐到期前我们会发送提醒。到期后您可以续费当前套餐或选择其他套餐。
+                  购买的额度永久有效，不会过期。您可以随时使用，无需担心时间限制。
                 </p>
               </div>
               <div>
