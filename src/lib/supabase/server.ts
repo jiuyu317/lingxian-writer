@@ -2,6 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
 export async function createClient() {
+  // 注意：Next.js 15 以后，cookies() 必须加上 await
   const cookieStore = await cookies()
 
   return createServerClient(
@@ -17,16 +18,11 @@ export async function createClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             )
-          } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
+          } catch (error) {
+            // 在服务端组件中调用 setAll 可能会报错，这是正常现象，直接忽略即可
           }
         },
       },
     }
   )
 }
-
-// 类型导出
-export type SupabaseClient = ReturnType<typeof createClient>
