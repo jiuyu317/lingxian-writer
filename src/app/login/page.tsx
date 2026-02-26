@@ -15,6 +15,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [agreed, setAgreed] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -170,11 +171,34 @@ export default function LoginPage() {
               </div>
             )}
 
+            {/* 免责声明复选框区域 */}
+            {!isLogin && (
+              <div className="flex items-center mt-4 mb-6">
+                <input
+                  type="checkbox"
+                  id="disclaimer"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                />
+                <label htmlFor="disclaimer" className="ml-2 text-sm text-gray-600 select-none cursor-pointer">
+                  我已阅读并同意
+                  <Link href="/disclaimer" target="_blank" className="text-blue-600 hover:underline font-medium ml-1">
+                    《灵现用户协议与免责声明》
+                  </Link>
+                </label>
+              </div>
+            )}
+
             {/* 提交按钮 */}
             <button
               type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              disabled={loading || (!isLogin && !agreed)}
+              className={`w-full text-white py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center ${
+                loading || (!isLogin && !agreed)
+                  ? 'bg-gray-300 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700'
+              }`}
             >
               {loading ? (
                 <>
