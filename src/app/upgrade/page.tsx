@@ -61,11 +61,11 @@ export default function UpgradePage() {
       description: '适合短期试用',
       price: 39,
       durationMonths: 1,
-      aiCredits: 1000,
+      aiCredits: 100,
       monthlyPrice: 39,
       savingsPercent: 0,
       features: [
-        '1000次AI写作生成',
+        '100次AI写作生成',
         '所有写作风格',
         '30天有效',
         '优先支持'
@@ -78,11 +78,11 @@ export default function UpgradePage() {
       description: '3个月套餐',
       price: 69,
       durationMonths: 3,
-      aiCredits: 3000,
+      aiCredits: 300,
       monthlyPrice: 23,
       savingsPercent: 41,
       features: [
-        '3000次AI写作生成',
+        '300次AI写作生成',
         '所有写作风格',
         '90天有效',
         '优先支持',
@@ -96,33 +96,15 @@ export default function UpgradePage() {
       description: '6个月套餐',
       price: 99,
       durationMonths: 6,
-      aiCredits: 6000,
+      aiCredits: 500,
       monthlyPrice: 16.5,
       savingsPercent: 58,
       features: [
-        '6000次AI写作生成',
+        '500次AI写作生成',
         '所有写作风格',
         '180天有效',
         '优先支持',
         '节省58%'
-      ],
-      popular: false
-    },
-    {
-      id: 'annual',
-      name: '年度版',
-      description: '12个月套餐',
-      price: 129,
-      durationMonths: 12,
-      aiCredits: 12000,
-      monthlyPrice: 10.75,
-      savingsPercent: 72,
-      features: [
-        '12000次AI写作生成',
-        '所有写作风格',
-        '365天有效',
-        '最高优先级',
-        '节省72%'
       ],
       popular: false
     }
@@ -358,7 +340,7 @@ export default function UpgradePage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {subscriptionPlans.map((plan) => {
             const isCurrent = currentTier === plan.id;
 
