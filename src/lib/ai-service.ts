@@ -166,15 +166,16 @@ export class AIService {
       '诗意散文': '使用优美、富有韵律的语言，像诗歌一样凝练，像散文一样自由。',
     };
 
-    const styleInstruction = writingStyleMap[config.writingStyle] || '使用生动有趣的语言';
+    const styleInstruction = writingStyleMap[config.writingStyle || ''] || '使用生动有趣的语言';
 
     // 情绪强度映射
     let emotionInstruction = '';
-    if (config.emotionLevel >= 80) {
+    const emotionLevel = config.emotionLevel || 50;
+    if (emotionLevel >= 80) {
       emotionInstruction = '情感要非常强烈，充满激情和感染力';
-    } else if (config.emotionLevel >= 60) {
+    } else if (emotionLevel >= 60) {
       emotionInstruction = '情感要比较明显，有适当的感染力';
-    } else if (config.emotionLevel >= 40) {
+    } else if (emotionLevel >= 40) {
       emotionInstruction = '情感要适中，自然流畅';
     } else {
       emotionInstruction = '情感要平淡一些，保持客观冷静';
@@ -182,11 +183,12 @@ export class AIService {
 
     // 创意等级映射到temperature
     let creativityInstruction = '';
-    if (config.creativityLevel >= 80) {
+    const creativityLevel = config.creativityLevel || 50;
+    if (creativityLevel >= 80) {
       creativityInstruction = '要大胆创新，突破常规，提供独特的视角和想法';
-    } else if (config.creativityLevel >= 60) {
+    } else if (creativityLevel >= 60) {
       creativityInstruction = '要有一定的新意，在传统基础上有所创新';
-    } else if (config.creativityLevel >= 40) {
+    } else if (creativityLevel >= 40) {
       creativityInstruction = '保持平衡，既有创意又符合常规';
     } else {
       creativityInstruction = '要保守一些，遵循传统和常规';

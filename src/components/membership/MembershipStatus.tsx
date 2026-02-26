@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { CreditCard, Zap, Crown, RefreshCw } from 'lucide-react';
 
@@ -23,6 +23,7 @@ export default function MembershipStatus() {
 
   const fetchUserAndStatus = async () => {
     try {
+      const supabase = createClient();
       const { data: { user: authUser } } = await supabase.auth.getUser();
       if (!authUser) {
         router.push('/login');
@@ -40,6 +41,7 @@ export default function MembershipStatus() {
 
   const fetchMembershipStatus = async (userId: string) => {
     try {
+      const supabase = createClient();
       const { data, error } = await supabase
         .rpc('check_user_credits', { p_user_id: userId });
 

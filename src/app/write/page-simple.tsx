@@ -18,8 +18,8 @@ export default function WritePage() {
     hasCredits, 
     currentCredits, 
     subscriptionTier, 
-    creditsLoading, 
-    creditsError, 
+    isLoading: creditsLoading, 
+    error: creditsError, 
     checkCredits 
   } = useCreditsSimple();
 

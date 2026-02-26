@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { 
   Check, X, AlertCircle, RefreshCw, Database, 
   Settings, History, FileText, Bookmark, 
-  User, Save, Trash2, Plus
+  User, Save, Trash2, Plus, Play
 } from "lucide-react";
 
 // 模拟测试用户ID
@@ -62,7 +62,7 @@ export default function TestDataPersistencePage() {
       
       // 更新测试数据
       if (result.data) {
-        setTestData(prev => ({
+        setTestData((prev: any) => ({
           ...prev,
           ...result.data
         }));
@@ -516,4 +516,25 @@ export default function TestDataPersistencePage() {
                             <span className="text-sm text-gray-500">
                               {result.duration}ms
                             </span>
-                            <span className
+                          </div>
+                        </div>
+                        <div className="mt-2">
+                          <p className="text-sm text-gray-700">{result.message}</p>
+                          {result.data && (
+                            <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">
+                              {JSON.stringify(result.data, null, 2)}
+                            </pre>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

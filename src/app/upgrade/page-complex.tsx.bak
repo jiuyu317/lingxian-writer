@@ -207,13 +207,6 @@ export default function UpgradePage() {
       alert(`升级失败: ${error.message || '未知错误'}`);
     } finally {
       setLoading(false);
-      }
-      
-    } catch (error: any) {
-      console.error('升级失败:', error);
-      alert(`升级失败: ${error.message || '未知错误'}`);
-    } finally {
-      setLoading(false);
     }
   };
 

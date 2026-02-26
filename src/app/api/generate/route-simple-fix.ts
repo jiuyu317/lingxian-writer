@@ -242,7 +242,7 @@ export async function POST(request: NextRequest) {
       const processingTime = endTime - startTime;
 
       const content = response.choices[0].message.content;
-      const tokensUsed = response.usage?.total_tokens || Math.ceil(content.length / 4);
+      const tokensUsed = response.usage?.total_tokens || Math.ceil((content || '').length / 4);
       const estimatedCost = tokensUsed * 0.000002; // 简单估算
       
       const generationId = generateId();
@@ -251,13 +251,13 @@ export async function POST(request: NextRequest) {
         generationId,
         tokensUsed,
         processingTime: `${processingTime}ms`,
-        contentLength: content.length,
+        contentLength: (content || '').length,
       });
 
       const apiResponse: GenerateResponse = {
         success: true,
         data: {
-          content,
+          content: content || '',
           tokensUsed,
           estimatedCost,
           generationId,
