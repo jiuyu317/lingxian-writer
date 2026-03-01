@@ -135,3 +135,48 @@ npm start
 ---
 
 **灵现智能体** - 给你的大脑放烟花！ ✨
+
+## 🚀 Vercel 部署
+
+本项目已配置 Vercel 自动部署。每次推送到 `main` 分支都会自动部署。
+
+### 一键部署
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjiuyu317%2Flingxian-writer)
+
+### 环境变量
+
+在 Vercel 中配置以下环境变量：
+
+| 变量名 | 说明 | 必需 |
+|--------|------|------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase 项目 URL | ✅ |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase 匿名密钥 | ✅ |
+| `OPENAI_API_KEY` | OpenAI API 密钥 | ❌ |
+
+### 手动部署步骤
+
+1. 访问 [Vercel](https://vercel.com)
+2. 使用 GitHub 登录
+3. 导入 `jiuyu317/lingxian-writer` 仓库
+4. 配置环境变量
+5. 点击部署
+
+### 自动部署
+
+- ✅ 推送到 `main` 分支 → 生产环境部署
+- ✅ 创建 Pull Request → 预览环境部署
+- ✅ 合并 Pull Request → 自动部署到生产
+
+### 部署状态
+
+[![Vercel](https://vercelbadge.vercel.app/api/jiuyu317/lingxian-writer)](https://vercel.com/jiuyu317/lingxian-writer)
+
+## 📞 支持
+
+- GitHub Issues: [报告问题](https://github.com/jiuyu317/lingxian-writer/issues)
+- 文档: 查看本 README 和项目文档
+
+## 📄 许可证
+
+MIT License - 详见 [LICENSE](LICENSE) 文件
